@@ -1,15 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function InputForm(props) {
-    const [input, setInput] = useState(0);
+    
     return (
-        <div className="">
-            Input<br/>
-            <input className="w-1/4 border border-gray-900 rounded-md p-2" 
-            value={input} 
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Enter values" />
-        </div>
+        <>
+            <input className="border border-gray-900 rounded-md p-2"
+                value={props.input}
+                onChange={(e) => props.setInput(e.target.value)}
+                placeholder="Enter values" />
+        </>
     )
 }
 export default InputForm;
