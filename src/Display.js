@@ -1,7 +1,10 @@
 function Display(props){
     return(
-        <div>
-            <h3></h3>
+        <div className="mt-6 border border-black px-[60px] rounded-md">
+            <h3>Operations</h3>
+            <div>
+                Result = 
+            </div>
         </div>
     )
 }

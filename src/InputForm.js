@@ -1,7 +1,10 @@
 
 function InputForm(props) {
-    return(
-            <input value=""/>
+    return (
+        <div className="m-4">
+            Enter numbers<br/>
+            <input className="border border-gray-900 rounded-md p-2" value="" placeholder="Enter values" />
+        </div>
     )
 }
 export default InputForm;

@@ -9,7 +9,7 @@ Basic arithmetic.
 Use React state to update the display. */}
 function App() {
   return (
-    <div className="App">
+    <div className="flex flex-col justify-center items-center">
       Calculator App
       <Display/>
       <InputForm/>
