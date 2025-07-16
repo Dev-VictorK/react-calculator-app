@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Arithmetics from './Arithmetics';
 import Display from './Display';
 import './index.css';
 import InputForm from './InputForm';
+import AddInputForm from './AddInputForm';
 {/**Calculator
 
 Basic arithmetic.
@@ -25,15 +26,15 @@ App
       setOperation
 */}
 function App() {
-  const [input, setInput] = useState(0);
-  const [operation, setOperation] = useState();
-  
+  const [operation, setOperation] = useState(null);
+  const [result, setResult] = useState(0);
+
   return (
     <div className="flex flex-col justify-center items-center border p-2 rounded-md border-gray-800 m-4">
       <h1 className="text-2xl text-bold">Calculator App</h1>
-      <Display input={input} operation={operation}/>
-      <InputForm setInput={setInput}/>
-      <Arithmetics setOperation={setOperation}/>
+      <Display result={result}/>
+      <AddInputForm operation={operation}/>
+      <Arithmetics setOperation={setOperation} />
     </div>
   );
 }
