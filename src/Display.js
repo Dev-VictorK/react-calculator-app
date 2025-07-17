@@ -1,7 +1,13 @@
-function Display(props){
+function Display({
+    result = "",
+    expression =""
+}){
     return(
-        <div className="mt-2 p-2 w-[250px] h-[40px] border border-black px-[60px] rounded-md">
-           {props.expression}
+        <div className="mt-2 p-2 w-auto h-auto border border-black px-[60px] rounded-md">
+           Expression = {expression}
+           <div>
+            <h3>Result = {result}</h3>
+           </div>
         </div>
     )
 }
