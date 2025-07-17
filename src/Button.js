@@ -4,8 +4,11 @@ function Button(props) {
         if (value !== "+") {
             props.setInput((prev) => prev += value);
         }
-        if(value === "+" || value === "-" || value === "*" || value === "*"){
+        if(value === "+" || value === "-" || value === "x" || value === "/"){
             props.buildOps(value);
+        }
+        if(value === "="){
+            props.calcResult();
         }
     }
     return (

@@ -21,6 +21,7 @@ Use React state to update the display.
 function App() {
   const [input, setInput] = useState("");
   const [seqOps, setSeqOps] = useState({});
+  const [result, setResult] = useState(0);
 
   const buildOps = (op) => {
     if (Object.keys(seqOps).length === 0) {
@@ -28,8 +29,7 @@ function App() {
       setSeqOps(obj);
       setInput("");
     } else {
-      let obj = buildList(seqOps, op);
-      setSeqOps(obj);
+      setSeqOps(buildList(seqOps, op));
       setInput("");
     }
   }
@@ -44,15 +44,23 @@ function App() {
     return newObj;
   }
 
-  useEffect(() => {
-    console.log(seqOps);
-  }, [seqOps]);
+  const calcResult = () => {
+    if(Object.keys(seqOps).length > 0){
+      //recursively pick number and check to see if next is !null
+      if(seqOps.next === null) {
+        setResult(Number(seqOps.number));
+      }else{
+        //recursively add
+      }
+    }
+  }
 
   return (
     <div className="flex flex-col justify-center items-center border p-2 rounded-md border-gray-800 m-4">
       <h1 className="text-2xl text-bold">Calculator App</h1>
+      <Display result={result}/>
       <ButtonPanel input={input} setInput={setInput}
-        buildOps={buildOps} />
+        buildOps={buildOps} calcResult={calcResult} />
     </div>
   );
 }
