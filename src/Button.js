@@ -1,14 +1,27 @@
 function Button(props) {
     const handleClick = (e) => {
         let value = e.target.value;
-        if (value !== "+") {
+        if (value !== "AC" && value !== "=") {
+            props.setExpression((prev) => prev += value);
+        }
+        if (!isOperator(value) && value !== "AC" && value !== "+/-") {
             props.setInput((prev) => prev += value);
         }
-        if(value === "+" || value === "-" || value === "x" || value === "/"){
+        if (isOperator(value)) {
             props.buildOps(value);
         }
-        if(value === "="){
-            props.calcResult();
+        if (value === "=") {
+            props.setCalc(true);
+        }
+        if (value === "AC") {
+            props.setCalc(false);
+        }
+    }
+
+    const isOperator = (value) => {
+        if (value === "+" || value === "-" || value === "x"
+            || value === "/" || value === "=") {
+            return true;
         }
     }
     return (

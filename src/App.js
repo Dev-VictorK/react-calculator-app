@@ -22,6 +22,8 @@ function App() {
   const [input, setInput] = useState("");
   const [seqOps, setSeqOps] = useState({});
   const [result, setResult] = useState(0);
+  const [calc, setCalc] = useState(false);
+  const [expression, setExpression] = useState("");
 
   const buildOps = (op) => {
     if (Object.keys(seqOps).length === 0) {
@@ -46,8 +48,7 @@ function App() {
 
   const calcResult = () => {
     if (Object.keys(seqOps).length > 0) {
-      //recursively pick number and check to see if next is !null
-      setResult(calcRecursively(seqOps, seqOps.number));
+      calcRecursively(seqOps, seqOps.number);
     }
   }
 
@@ -57,20 +58,26 @@ function App() {
       let op = obj.operation;
       let nNum = Number(obj.next.number);
       if (op === "+") cNum += nNum;
-      if (op === "-") cNum -+ nNum;
+      if (op === "-") cNum -= nNum;
       if (op === "x") cNum *= nNum;
       if (op === "/") cNum /= nNum;
       calcRecursively(obj.next, cNum);
+    } else {
+      setResult(cNum);
     }
-      return cNum;
   }
+
+  useEffect(() => {
+    setResult(0);
+    if (calc) calcResult();
+  }, [calc])
 
   return (
     <div className="flex flex-col justify-center items-center border p-2 rounded-md border-gray-800 m-4">
       <h1 className="text-2xl text-bold">Calculator App</h1>
-      <Display result={result} />
+      <Display result={result} expression={expression}/>
       <ButtonPanel input={input} setInput={setInput}
-        buildOps={buildOps} calcResult={calcResult} />
+        buildOps={buildOps} setExpression={setExpression} calcResult={calcResult} setCalc={setCalc} />
     </div>
   );
 }
