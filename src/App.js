@@ -45,20 +45,30 @@ function App() {
   }
 
   const calcResult = () => {
-    if(Object.keys(seqOps).length > 0){
+    if (Object.keys(seqOps).length > 0) {
       //recursively pick number and check to see if next is !null
-      if(seqOps.next === null) {
-        setResult(Number(seqOps.number));
-      }else{
-        //recursively add
-      }
+      setResult(calcRecursively(seqOps, seqOps.number));
     }
+  }
+
+  const calcRecursively = (obj, sValue) => {
+    let cNum = Number(sValue);
+    if (obj.next !== null) {
+      let op = obj.operation;
+      let nNum = Number(obj.next.number);
+      if (op === "+") cNum += nNum;
+      if (op === "-") cNum -+ nNum;
+      if (op === "x") cNum *= nNum;
+      if (op === "/") cNum /= nNum;
+      calcRecursively(obj.next, cNum);
+    }
+      return cNum;
   }
 
   return (
     <div className="flex flex-col justify-center items-center border p-2 rounded-md border-gray-800 m-4">
       <h1 className="text-2xl text-bold">Calculator App</h1>
-      <Display result={result}/>
+      <Display result={result} />
       <ButtonPanel input={input} setInput={setInput}
         buildOps={buildOps} calcResult={calcResult} />
     </div>
