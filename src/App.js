@@ -61,6 +61,7 @@ function App() {
       if (op === "-") cNum -= nNum;
       if (op === "x") cNum *= nNum;
       if (op === "/") cNum /= nNum;
+      if (op === "%") cNum = (cNum * nNum) / 100;
       calcRecursively(obj.next, cNum);
     } else {
       setResult(cNum);
@@ -75,7 +76,7 @@ function App() {
   return (
     <div className="flex flex-col justify-center items-center border p-2 rounded-md border-gray-800 m-4">
       <h1 className="text-2xl text-bold">Calculator App</h1>
-      <Display result={result} expression={expression}/>
+      <Display result={result} expression={expression} />
       <ButtonPanel input={input} setInput={setInput}
         buildOps={buildOps} setExpression={setExpression} calcResult={calcResult} setCalc={setCalc} />
     </div>
