@@ -23,6 +23,7 @@ function Button(props) {
         }
         if (value === "AC") {
             props.setCalc(false);
+            props.setSeqOps({});
             props.setExpression("");
         }
     }

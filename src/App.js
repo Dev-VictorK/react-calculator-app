@@ -57,11 +57,11 @@ function App() {
     if (obj.next !== null) {
       let op = obj.operation;
       let nNum = Number(obj.next.number);
-      if (op === "+") cNum += nNum;
-      if (op === "-") cNum -= nNum;
-      if (op === "x") cNum *= nNum;
-      if (op === "/") cNum /= nNum;
-      if (op === "%") cNum = (cNum * nNum) / 100;
+      if (op === "+") cNum = cNum + nNum;
+      if (op === "-") cNum = cNum - nNum;
+      if (op === "x") cNum = cNum * nNum;
+      if (op === "/") cNum = cNum / nNum;
+      if (op === "%") cNum = (cNum * nNum) / 100 ;
       calcRecursively(obj.next, cNum);
     } else {
       setResult(cNum);
@@ -70,15 +70,17 @@ function App() {
 
   useEffect(() => {
     setResult(0);
-    if (calc) calcResult();
-  }, [calc])
+    if(calc) calcResult();
+  }, [seqOps])
 
   return (
     <div className="flex flex-col justify-center items-center border p-2 rounded-md border-gray-800 m-4">
       <h1 className="text-2xl text-bold">Calculator App</h1>
       <Display result={result} expression={expression} />
       <ButtonPanel input={input} setInput={setInput}
-        buildOps={buildOps} setExpression={setExpression} calcResult={calcResult} setCalc={setCalc} />
+        buildOps={buildOps} setExpression={setExpression} 
+        calcResult={calcResult} setCalc={setCalc} 
+        setResult={setResult} setSeqOps={setSeqOps}/>
     </div>
   );
 }
