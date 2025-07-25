@@ -1,23 +1,8 @@
 import Display from './Display';
 import './index.css';
 import ButtonPanel from './ButtonPanel';
-import { useEffect, useState } from 'react';
-{/**Calculator
+import { useEffect, useState, useCallback } from 'react';
 
-Basic arithmetic.
-
-Use React state to update the display.
-
-{
-  number: 0,
-  op: +,
-  next: { 
-          number: 2
-          op: null
-          next: false
-        }
-}
-*/}
 function App() {
   const [input, setInput] = useState("");
   const [seqOps, setSeqOps] = useState({});
@@ -46,13 +31,7 @@ function App() {
     return newObj;
   }
 
-  const calcResult = () => {
-    if (Object.keys(seqOps).length > 0) {
-      calcRecursively(seqOps, seqOps.number);
-    }
-  }
-
-  const calcRecursively = (obj, sValue) => {
+  const calcRecursively = useCallback((obj, sValue) => {
     let cNum = Number(sValue);
     if (obj.next !== null) {
       let op = obj.operation;
@@ -61,26 +40,33 @@ function App() {
       if (op === "-") cNum = cNum - nNum;
       if (op === "x") cNum = cNum * nNum;
       if (op === "/") cNum = cNum / nNum;
-      if (op === "%") cNum = (cNum * nNum) / 100 ;
-      calcRecursively(obj.next, cNum);
+      if (op === "%") cNum = (cNum * nNum) / 100;
+      calcRecursively(obj.next, cNum); // safe since it's the same memoized version
     } else {
       setResult(cNum);
     }
-  }
+  }, []);
+
+
+  const calcResult = useCallback(() => {
+    if (Object.keys(seqOps).length > 0) {
+      calcRecursively(seqOps, seqOps.number);
+    }
+  }, [seqOps, calcRecursively]);
 
   useEffect(() => {
     setResult(0);
-    if(calc) calcResult();
-  }, [seqOps])
+    if (calc) calcResult();
+  }, [seqOps, calc, calcResult]);
 
   return (
     <div className="flex flex-col justify-center items-center border p-2 rounded-md border-gray-800 m-4">
       <h1 className="text-2xl text-bold">Calculator App</h1>
       <Display result={result} expression={expression} />
       <ButtonPanel input={input} setInput={setInput}
-        buildOps={buildOps} setExpression={setExpression} 
-        calcResult={calcResult} setCalc={setCalc} 
-        setResult={setResult} setSeqOps={setSeqOps}/>
+        buildOps={buildOps} setExpression={setExpression}
+        calcResult={calcResult} setCalc={setCalc}
+        setResult={setResult} setSeqOps={setSeqOps} />
     </div>
   );
 }
